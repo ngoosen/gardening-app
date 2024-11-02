@@ -1,4 +1,4 @@
-import styles from "@/app/page.module.scss";
+// import styles from "@/app/page.module.scss";
 
 import PlantList from "./components/PlantList";
 
