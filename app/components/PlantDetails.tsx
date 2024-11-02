@@ -7,22 +7,33 @@ import { IPlant } from "@/hooks/usePlants";
 
 import Dialog from "./ui/Dialog";
 import Button from "./ui/Button";
+import NewPlantForm from "./NewPlantForm";
 
 interface IPlantDetailsProps {
   plant: IPlant
+  onUpdate: CallableFunction
   onDelete: CallableFunction
 }
 
 export default function PlantDetails(props: IPlantDetailsProps): JSX.Element {
-  const { plant, onDelete, } = props;
+  const { plant, onUpdate, onDelete, } = props;
   const [showDialog, setShowDialog,] = useState<boolean>(false);
+  const [showUpdateForm, setShowUpdateForm] = useState<boolean>(false);
 
   function toggleDialog() {
     setShowDialog(latest => !latest);
   }
 
+  function toggleUpdateForm() {
+    setShowUpdateForm(latest =>!latest);
+  }
+
   function deleteHandler() {
     onDelete(plant.id);
+  }
+
+  function updateHandler(name: string, description: string) {
+    onUpdate(plant, name, description);
   }
 
   return (
@@ -37,9 +48,17 @@ export default function PlantDetails(props: IPlantDetailsProps): JSX.Element {
         </div>
 
         <div className={styles.actions}>
-          <Button>Update</Button>
+          <Button onClick={toggleUpdateForm}>Update</Button>
           <Button onClick={toggleDialog}>Delete</Button>
         </div>
+
+        {showUpdateForm && (
+          <NewPlantForm
+            onSubmit={updateHandler}
+            defaultName={plant.name}
+            defaultDescription={plant.description}
+          />
+        )}
       </div>
 
       {showDialog && (

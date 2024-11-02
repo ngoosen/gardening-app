@@ -27,6 +27,7 @@ export default function usePlants(): [
   CallableFunction,
   CallableFunction,
   CallableFunction,
+  CallableFunction,
 ] {
   const [plantsMetadata, setPlantsMetadata] = useState<IPlantsMetadata | undefined>();
   const [plantDetails, setPlantDetails] = useState<IPlant | undefined>();
@@ -71,6 +72,22 @@ export default function usePlants(): [
     }
   }
 
+  async function updatePlant(newPlant: IPlant) {
+    try {
+      await fetch(`http://localhost:8080/api/v1/plants/${newPlant.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newPlant),
+      });
+
+      getPlants();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async function deletePlant(id: number) {
     try {
       await fetch(`http://localhost:8080/api/v1/plants/${id}`, {
@@ -93,6 +110,7 @@ export default function usePlants(): [
     plantDetails,
     getPlant,
     addPlant,
+    updatePlant,
     deletePlant,
     clearPlantDetails,
   ];

@@ -4,10 +4,12 @@ import styles from "@/style/components/NewPlantForm.module.scss";
 
 interface IPlantAddFormProps {
   onSubmit: CallableFunction
+  defaultName?: string
+  defaultDescription?: string
 }
 
 export default function NewPlantForm(props: IPlantAddFormProps): JSX.Element {
-  const { onSubmit, } = props;
+  const { onSubmit, defaultName, defaultDescription, } = props;
 
   const nameRef = useRef<HTMLInputElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
@@ -25,12 +27,12 @@ export default function NewPlantForm(props: IPlantAddFormProps): JSX.Element {
     <form className={styles.main}>
       <div className={styles.name}>
         <label htmlFor="name">Name</label>
-        <input ref={nameRef} type="text" name="name" id="name" />
+        <input ref={nameRef} type="text" name="name" id="name" defaultValue={defaultName ?? ""} />
       </div>
 
       <div className={styles.description}>
         <label htmlFor="description">Description</label>
-        <textarea ref={descriptionRef} name="description" id="description" rows={3} />
+        <textarea ref={descriptionRef} name="description" id="description" rows={3} defaultValue={defaultDescription ?? ""} />
       </div>
 
       <button className={styles.submit_button} onClick={submitHandler}>Submit</button>

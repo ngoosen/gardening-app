@@ -19,6 +19,7 @@ export default function PlantList(): JSX.Element {
     plantDetails,
     getPlant,
     addPlant,
+    updatePlant,
     deletePlant,
     clearPlantDetails,
   ] = usePlants();
@@ -54,6 +55,15 @@ export default function PlantList(): JSX.Element {
     });
   }
 
+  function updatePlantHandler(plant: IPlant, name: string, description: string) {
+    updatePlant({
+      ...plant,
+      name,
+      description,
+    });
+    clearPlantDetails();
+  }
+
   if (!plants?.content) {
     return <></>;
   }
@@ -74,6 +84,7 @@ export default function PlantList(): JSX.Element {
         {plantDetails && (
           <PlantDetails
             plant={plantDetails}
+            onUpdate={updatePlantHandler}
             onDelete={deletePlantHandler}
           />
         )}
