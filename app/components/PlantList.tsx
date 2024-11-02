@@ -1,10 +1,11 @@
 "use client";
 
 import { useEffect } from "react";
+import dayjs from "dayjs";
 
 import styles from "@/style/components/PlantList.module.scss";
 
-import usePlants from "@/hooks/usePlants";
+import usePlants, { IPlant } from "@/hooks/usePlants";
 
 import PlantListItem from "./PlantListItem";
 import PlantDetails from "./PlantDetails";
@@ -16,6 +17,7 @@ export default function PlantList(): JSX.Element {
     getPlants,
     plantDetails,
     getPlant,
+    addPlant,
     deletePlant,
     clearPlantDetails,
   ] = usePlants();
@@ -34,8 +36,15 @@ export default function PlantList(): JSX.Element {
     clearPlantDetails();
   }
 
-  function addPlantHandler() {
-    //
+  function addPlantHandler(name: string, description: string) {
+    addPlant({
+      id: 0,
+      version: 0,
+      name,
+      description,
+      createdAt: dayjs().toISOString(),
+      updatedAt: dayjs().toISOString(),
+    });
   }
 
   if (!plants?.content) {
