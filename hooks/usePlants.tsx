@@ -20,7 +20,7 @@ export interface IPlant {
 }
 
 export default function usePlants(): [IPlantsMetadata | undefined, CallableFunction, CallableFunction] {
-  const [plantsMetadata, setPlantsData] = useState<IPlantsMetadata | undefined>();
+  const [plantsMetadata, setPlantsMetadata] = useState<IPlantsMetadata | undefined>();
 
   async function getPlants() {
     console.info("Fetching plants...");
@@ -28,7 +28,7 @@ export default function usePlants(): [IPlantsMetadata | undefined, CallableFunct
     const response = await fetch("http://localhost:8080/api/v1/plants");
     const data = await response.json();
 
-    setPlantsData(data);
+    setPlantsMetadata(data);
   }
 
   async function getPlant(id: number) {
