@@ -56,9 +56,11 @@ export default function usePlants(): [
 
   async function deletePlant(id: number) {
     try {
-      fetch(`http://localhost:8080/api/v1/plants/${id}`, {
+      await fetch(`http://localhost:8080/api/v1/plants/${id}`, {
         method: "DELETE",
       });
+
+      getPlants();
     } catch (error) {
       console.log(error);
     }

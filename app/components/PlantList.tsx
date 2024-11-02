@@ -31,7 +31,6 @@ export default function PlantList(): JSX.Element {
   function deletePlantHandler(id: number) {
     deletePlant(id);
     clearPlantDetails();
-    getPlants();
   }
 
   if (!plants?.content) {
