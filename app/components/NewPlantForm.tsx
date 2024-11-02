@@ -1,5 +1,7 @@
 import { useRef } from "react";
 
+import styles from "@/style/components/NewPlantForm.module.scss";
+
 interface IPlantAddFormProps {
   onSubmit: CallableFunction
 }
@@ -20,18 +22,18 @@ export default function NewPlantForm(props: IPlantAddFormProps): JSX.Element {
   }
 
   return (
-    <form>
-      <div>
+    <form className={styles.main}>
+      <div className={styles.name}>
         <label htmlFor="name">Name</label>
         <input ref={nameRef} type="text" name="name" id="name" />
       </div>
 
-      <div>
+      <div className={styles.description}>
         <label htmlFor="description">Description</label>
-        <textarea ref={descriptionRef} name="description" id="description" />
+        <textarea ref={descriptionRef} name="description" id="description" rows={3} />
       </div>
 
-      <button type="button" onClick={submitHandler}>Submit</button>
+      <button className={styles.submit_button} onClick={submitHandler}>Submit</button>
     </form>
   );
 }

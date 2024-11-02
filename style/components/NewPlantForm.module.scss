@@ -1,0 +1,64 @@
+@import "../variables";
+
+.main {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 20px;
+
+  width: fit-content;
+
+  padding: 50px;
+
+  border-radius: 20px;
+  background-color: $secondary_green;
+
+  > div {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+
+    > input, > textarea {
+      border: none;
+
+      padding: 10px;
+
+      border-radius: 5px;
+
+      &:focus {
+        outline: 2px solid $blue;
+      }
+
+      &:invalid {
+        outline: 2px solid #ff0000;
+      }
+    }
+  }
+
+  .submit_button {
+    align-self: center;
+
+    appearance: none;
+    border: none;
+
+    width: fit-content;
+
+    padding: 10px 50px;
+
+    font-size: 18px;
+
+    border-radius: 50px;
+    background-color: #ffffff;
+
+    transition: all .1s;
+
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.05);
+
+      color: #ffffff;
+      background-color: $blue;
+    }
+  }
+}
