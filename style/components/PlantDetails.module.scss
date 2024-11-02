@@ -1,3 +1,5 @@
+@import "../variables";
+
 .main {
   width: 50vw;
 
@@ -30,7 +32,7 @@
       font-size: 16px;
 
       border-radius: 50px;
-      background-color: #ceffe4;
+      background-color: $primary_green;
 
       transition: all .1s;
 

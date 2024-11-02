@@ -1,3 +1,5 @@
+@import "../variables";
+
 .container {
   display: flex;
   flex-direction: column;
@@ -6,7 +8,7 @@
 
   padding: 50px;
 
-  background-color: #ceffe4;
+  background-color: $primary_green;
 }
 
 .main {
