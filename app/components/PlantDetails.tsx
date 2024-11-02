@@ -5,6 +5,7 @@ import styles from "@/style/components/PlantDetails.module.scss";
 import { IPlant } from "@/hooks/usePlants";
 
 import Dialog from "./ui/Dialog";
+import Button from "./ui/Button";
 
 interface IPlantDetailsProps {
   plant: IPlant
@@ -25,8 +26,8 @@ export default function plantDetails(props: IPlantDetailsProps): JSX.Element {
         </div>
 
         <div className={styles.actions}>
-          <button>Update</button>
-          <button>Delete</button>
+          <Button>Update</Button>
+          <Button>Delete</Button>
         </div>
       </div>
 
@@ -34,8 +35,8 @@ export default function plantDetails(props: IPlantDetailsProps): JSX.Element {
         <p>Are you sure you want to delete this?</p>
 
         <div>
-          <button>Yes</button>
-          <button>No</button>
+          <Button>Yes</Button>
+          <Button>No</Button>
         </div>
       </Dialog>
     </>
