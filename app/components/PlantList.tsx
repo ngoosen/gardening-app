@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
 import styles from "@/style/components/PlantList.module.scss";
@@ -10,6 +10,7 @@ import usePlants, { IPlant } from "@/hooks/usePlants";
 import PlantListItem from "./PlantListItem";
 import PlantDetails from "./PlantDetails";
 import PlantAddForm from "./NewPlantForm";
+import Button from "./ui/Button";
 
 export default function PlantList(): JSX.Element {
   const [
@@ -21,6 +22,8 @@ export default function PlantList(): JSX.Element {
     deletePlant,
     clearPlantDetails,
   ] = usePlants();
+
+  const [showAddPlantForm, setShowAddPlantForm] = useState<boolean>(false);
 
   useEffect(() => {
     getPlants();
@@ -34,6 +37,10 @@ export default function PlantList(): JSX.Element {
   function deletePlantHandler(id: number) {
     deletePlant(id);
     clearPlantDetails();
+  }
+
+  function toggleAddPlantForm() {
+    setShowAddPlantForm(latest => !latest);
   }
 
   function addPlantHandler(name: string, description: string) {
@@ -72,7 +79,15 @@ export default function PlantList(): JSX.Element {
         )}
       </div>
 
-      <PlantAddForm onSubmit={addPlantHandler} />
+      <div className={styles.actions}>
+        <Button className={styles.add_plant_toggle_button} onClick={toggleAddPlantForm}>
+          Add new plant
+        </Button>
+
+        {showAddPlantForm && (
+          <PlantAddForm onSubmit={addPlantHandler} />
+        )}
+      </div>
     </>
   );
 }

@@ -18,7 +18,7 @@ export default function PlantDetails(props: IPlantDetailsProps): JSX.Element {
   const [showDialog, setShowDialog,] = useState<boolean>(false);
 
   function toggleDialog() {
-    setShowDialog(!showDialog);
+    setShowDialog(latest => !latest);
   }
 
   function deleteHandler() {
