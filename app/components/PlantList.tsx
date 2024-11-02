@@ -5,24 +5,29 @@ import styles from "@/style/components/PlantList.module.scss";
 import usePlants, { IPlant } from "@/hooks/usePlants";
 
 import PlantListItem from "./PlantListItem";
+import PlantDetails from "./PlantDetails";
 
-export default function PlantList(props: { plants: IPlant[]}) {
+export default function PlantList(props: { plants: IPlant[]}): JSX.Element {
   const { plants, } = props;
-  const [,, getPlant,] = usePlants();
+  const [,, plantDetails, getPlant,] = usePlants();
 
   async function clickHandler(id: number) {
     getPlant(id);
   }
 
   return (
-    <ul className={styles.main}>
-      {plants.map(plant => (
-        <PlantListItem
+    <div className={styles.container}>
+      <ul className={styles.main}>
+        {plants.map(plant => (
+          <PlantListItem
           key={plant.id}
           plant={plant}
           onClick={clickHandler}
-        />
-      ))}
-    </ul>
+          />
+        ))}
+      </ul>
+
+      {plantDetails && <PlantDetails plant={plantDetails} />}
+    </div>
   );
 }

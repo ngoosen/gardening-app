@@ -5,7 +5,7 @@ interface IPlantListItemProps {
   onClick: CallableFunction
 }
 
-export default function PlantListItem(props: IPlantListItemProps) {
+export default function PlantListItem(props: IPlantListItemProps): JSX.Element {
   const { plant, onClick, } = props;
 
   function clickHandler() {

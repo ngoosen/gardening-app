@@ -19,8 +19,14 @@ export interface IPlant {
   updatedAt: string
 }
 
-export default function usePlants(): [IPlantsMetadata | undefined, CallableFunction, CallableFunction] {
+export default function usePlants(): [
+  IPlantsMetadata | undefined,
+  CallableFunction,
+  IPlant | undefined,
+  CallableFunction
+] {
   const [plantsMetadata, setPlantsMetadata] = useState<IPlantsMetadata | undefined>();
+  const [plantDetails, setPlantDetails] = useState<IPlant | undefined>();
 
   async function getPlants() {
     console.info("Fetching plants...");
@@ -34,12 +40,14 @@ export default function usePlants(): [IPlantsMetadata | undefined, CallableFunct
   async function getPlant(id: number) {
     const response = await fetch(`http://localhost:8080/api/v1/plants/${id}`);
     const data = await response.json();
-    console.log("🚀 ~ getPlant ~ data:", data);
+
+    setPlantDetails(data);
   }
 
   return [
     plantsMetadata,
     getPlants,
+    plantDetails,
     getPlant
   ];
 }

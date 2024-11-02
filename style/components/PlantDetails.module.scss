@@ -1,0 +1,52 @@
+.main {
+  width: 50vw;
+
+  padding: 50px;
+
+  border-radius: 20px;
+  background-color: #ffffff;
+
+  > p {
+    margin: 40px 0;
+  }
+
+  .dates {
+    color: #5e5e5e;
+    font-size: 12px;
+
+    margin-bottom: 20px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 20px;
+
+    > button {
+      appearance: none;
+      border: none;
+
+      padding: 10px 35px;
+
+      font-size: 16px;
+
+      border-radius: 50px;
+      background-color: #ceffe4;
+
+      transition: all .1s;
+
+      &:hover {
+        cursor: pointer;
+        transform: scale(1.1);
+        color: #ffffff;
+      }
+
+      &:first-of-type:hover {
+        background-color: #48b0ec;
+      }
+
+      &:last-of-type:hover {
+        background-color: #ff5722;
+      }
+    }
+  }
+}

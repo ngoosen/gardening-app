@@ -1,13 +1,22 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+
+  padding: 50px;
+
+  background-color: #ceffe4;
+}
+
 .main {
   display: flex;
   flex-direction: column;
   gap: 10px;
 
-  padding: 20px;
+  width: 100%;
 
   list-style-type: none;
-
-  background-color: #ceffe4;
 
   li {
     display: flex;
