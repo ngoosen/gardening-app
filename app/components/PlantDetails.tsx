@@ -10,14 +10,19 @@ import Button from "./ui/Button";
 
 interface IPlantDetailsProps {
   plant: IPlant
+  onDelete: CallableFunction
 }
 
 export default function PlantDetails(props: IPlantDetailsProps): JSX.Element {
-  const { plant, } = props;
+  const { plant, onDelete, } = props;
   const [showDialog, setShowDialog,] = useState<boolean>(false);
 
   function toggleDialog() {
     setShowDialog(!showDialog);
+  }
+
+  function deleteHandler() {
+    onDelete(plant.id);
   }
 
   return (
@@ -42,7 +47,7 @@ export default function PlantDetails(props: IPlantDetailsProps): JSX.Element {
           <p>Are you sure you want to delete {plant.name}?</p>
 
           <div className={styles.dialog_buttons}>
-            <Button>Yes</Button>
+            <Button onClick={deleteHandler}>Yes</Button>
             <Button onClick={toggleDialog}>No</Button>
           </div>
         </Dialog>
