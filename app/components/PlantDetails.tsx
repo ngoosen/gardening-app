@@ -43,11 +43,11 @@ export default function PlantDetails(props: IPlantDetailsProps): JSX.Element {
       </div>
 
       {showDialog && (
-        <Dialog>
+        <Dialog onClose={toggleDialog}>
           <p>Are you sure you want to delete {plant.name}?</p>
 
           <div className={styles.dialog_buttons}>
-            <Button onClick={deleteHandler}>Yes</Button>
+            <Button onClick={deleteHandler} className={styles.confirm}>Yes</Button>
             <Button onClick={toggleDialog}>No</Button>
           </div>
         </Dialog>
