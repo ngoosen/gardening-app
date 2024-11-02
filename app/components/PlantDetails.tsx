@@ -1,3 +1,4 @@
+import { useState } from "react";
 import dayjs from "dayjs";
 
 import styles from "@/style/components/PlantDetails.module.scss";
@@ -11,8 +12,13 @@ interface IPlantDetailsProps {
   plant: IPlant
 }
 
-export default function plantDetails(props: IPlantDetailsProps): JSX.Element {
+export default function PlantDetails(props: IPlantDetailsProps): JSX.Element {
   const { plant, } = props;
+  const [showDialog, setShowDialog,] = useState<boolean>(false);
+
+  function toggleDialog() {
+    setShowDialog(!showDialog);
+  }
 
   return (
     <>
@@ -27,18 +33,20 @@ export default function plantDetails(props: IPlantDetailsProps): JSX.Element {
 
         <div className={styles.actions}>
           <Button>Update</Button>
-          <Button>Delete</Button>
+          <Button onClick={toggleDialog}>Delete</Button>
         </div>
       </div>
 
-      <Dialog>
-        <p>Are you sure you want to delete this?</p>
+      {showDialog && (
+        <Dialog>
+          <p>Are you sure you want to delete {plant.name}?</p>
 
-        <div>
-          <Button>Yes</Button>
-          <Button>No</Button>
-        </div>
-      </Dialog>
+          <div className={styles.dialog_buttons}>
+            <Button>Yes</Button>
+            <Button onClick={toggleDialog}>No</Button>
+          </div>
+        </Dialog>
+      )}
     </>
   );
 }
