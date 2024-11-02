@@ -8,6 +8,7 @@ import usePlants from "@/hooks/usePlants";
 
 import PlantListItem from "./PlantListItem";
 import PlantDetails from "./PlantDetails";
+import PlantAddForm from "./NewPlantForm";
 
 export default function PlantList(): JSX.Element {
   const [
@@ -33,28 +34,36 @@ export default function PlantList(): JSX.Element {
     clearPlantDetails();
   }
 
+  function addPlantHandler() {
+    //
+  }
+
   if (!plants?.content) {
     return <></>;
   }
 
   return (
-    <div className={styles.container}>
-      <ul className={styles.main}>
-        {plants.content.map(plant => (
-          <PlantListItem
-          key={plant.id}
-          plant={plant}
-          onClick={clickHandler}
-          />
-        ))}
-      </ul>
+    <>
+      <div className={styles.container}>
+        <ul className={styles.main}>
+          {plants.content.map(plant => (
+            <PlantListItem
+            key={plant.id}
+            plant={plant}
+            onClick={clickHandler}
+            />
+          ))}
+        </ul>
 
-      {plantDetails && (
-        <PlantDetails
-          plant={plantDetails}
-          onDelete={deletePlantHandler}
-        />
-      )}
-    </div>
+        {plantDetails && (
+          <PlantDetails
+            plant={plantDetails}
+            onDelete={deletePlantHandler}
+          />
+        )}
+      </div>
+
+      <PlantAddForm onSubmit={addPlantHandler} />
+    </>
   );
 }
