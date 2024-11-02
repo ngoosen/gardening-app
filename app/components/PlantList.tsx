@@ -1,22 +1,27 @@
-export interface IPlant {
-  id: number
-  version: number
-  name: string
-  description: string
-  createdAt: string
-  updatedAt: string
-}
+"use client";
 
-export default async function PlantList() {
-  const data = await fetch("http://localhost:8080/api/v1/plants");
-  const parsing = await data.json();
-  const plants: IPlant[] = parsing.content;
-  console.log("🚀 ~ PlantList ~ plants:", plants);
+import styles from "@/style/components/PlantList.module.scss";
+
+import usePlants, { IPlant } from "@/hooks/usePlants";
+
+import PlantListItem from "./PlantListItem";
+
+export default function PlantList(props: { plants: IPlant[]}) {
+  const { plants, } = props;
+  const [,, getPlant,] = usePlants();
+
+  async function clickHandler(id: number) {
+    getPlant(id);
+  }
 
   return (
-    <ul>
-      {plants.map((plant, index) => (
-        <li key={index}>{plant.name}</li>
+    <ul className={styles.main}>
+      {plants.map(plant => (
+        <PlantListItem
+          key={plant.id}
+          plant={plant}
+          onClick={clickHandler}
+        />
       ))}
     </ul>
   );
