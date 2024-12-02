@@ -1,5 +1,7 @@
 import { useState } from "react";
 
+import { mockPlantsData } from "@/lib/mockPlantsData";
+
 interface IPlantsMetadata {
   content: IPlant[]
   page: {
@@ -19,6 +21,8 @@ export interface IPlant {
   updatedAt: string
 }
 
+const enableMockData = process.env.NODE_ENV !== "production" && true;
+
 export default function usePlants(): [
   IPlantsMetadata | undefined,
   CallableFunction,
@@ -36,8 +40,14 @@ export default function usePlants(): [
     console.info("Fetching plants...");
 
     try {
-      const response = await fetch("http://localhost:8080/api/v1/plants");
-      const data = await response.json();
+      let data;
+
+      if (enableMockData) {
+        data = mockPlantsData;
+      } else {
+        const response = await fetch("http://localhost:8080/api/v1/plants");
+        data = await response.json();
+      }
 
       setPlantsMetadata(data);
     } catch (error) {
@@ -47,8 +57,15 @@ export default function usePlants(): [
 
   async function getPlant(id: number) {
     try {
-      const response = await fetch(`http://localhost:8080/api/v1/plants/${id}`);
-      const data = await response.json();
+      let data;
+
+      if (enableMockData) {
+        data = mockPlantsData.content[id - 1];
+        setPlantDetails(undefined);
+      } else {
+        const response = await fetch(`http://localhost:8080/api/v1/plants/${id}`);
+        data = await response.json();
+      }
 
       setPlantDetails(data);
     } catch (error) {
@@ -58,15 +75,33 @@ export default function usePlants(): [
 
   async function addPlant(newPlant: IPlant) {
     try {
-      await fetch("http://localhost:8080/api/v1/plants", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newPlant),
-      });
+      if (enableMockData) {
+        newPlant = {
+          ...newPlant,
+          id: mockPlantsData.content.length + 1
+        };
 
-      getPlants();
+        const newContent = {
+          ...mockPlantsData,
+          content: [
+            ...mockPlantsData.content,
+            newPlant,
+          ]
+        };
+
+        mockPlantsData.content.push(newPlant);
+        setPlantsMetadata(newContent);
+      } else {
+        await fetch("http://localhost:8080/api/v1/plants", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newPlant),
+        });
+
+        getPlants();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -74,15 +109,27 @@ export default function usePlants(): [
 
   async function updatePlant(newPlant: IPlant) {
     try {
-      await fetch(`http://localhost:8080/api/v1/plants/${newPlant.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(newPlant),
-      });
+      if (enableMockData && plantsMetadata) {
+        const newContent = {
+          ...plantsMetadata,
+        };
 
-      getPlants();
+        newContent.content[newPlant.id - 1] = {
+          ...newPlant,
+        };
+
+        setPlantsMetadata(newContent);
+      } else {
+        await fetch(`http://localhost:8080/api/v1/plants/${newPlant.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newPlant),
+        });
+
+        getPlants();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -90,11 +137,26 @@ export default function usePlants(): [
 
   async function deletePlant(id: number) {
     try {
-      await fetch(`http://localhost:8080/api/v1/plants/${id}`, {
-        method: "DELETE",
-      });
+      if (enableMockData && plantsMetadata) {
+        const newContent = plantsMetadata;
 
-      getPlants();
+        const start = newContent.content.slice(0, id - 1);
+        const end = newContent.content.slice(id);
+
+        newContent.content = [
+          ...start,
+          ...end,
+        ]
+
+        setPlantsMetadata({
+          ...newContent
+        });
+      } else {
+        await fetch(`http://localhost:8080/api/v1/plants/${id}`, {
+          method: "DELETE",
+        });
+        getPlants();
+      }
     } catch (error) {
       console.log(error);
     }
