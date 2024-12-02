@@ -3,11 +3,21 @@
 .main {
   float: left;
 
+  position: relative;
+
+  display: flex;
+
   height: 100vh;
+
+  padding: 50px 20px;
 
   background-color: $secondary_green;
 
   transition: all .5s;
+
+  ul {
+    list-style: none;
+  }
 }
 
 .open {
