@@ -1,0 +1,54 @@
+@import "../../variables";
+
+$logo_size_closed: calc($side_nav_size_closed - (2 * $side_nav_padding_size));
+
+.main {
+  display: flex;
+  gap: 10px;
+
+  width: $logo_size_closed;
+  height: $logo_size_closed;
+
+  text-decoration: none;
+  overflow: hidden;
+
+  transition: all .5s;
+
+  svg {
+    width: $logo_size_closed;
+    height: $logo_size_closed;
+
+    padding: 5px;
+
+    color: #ffffff;
+
+    border: 5px solid #ffffff;
+    border-radius: 10px;
+
+    transition: all .1s;
+  }
+
+  .title {
+    display: flex;
+    align-items: center;
+
+    width: 0;
+
+    h1 {
+      color: #ffffff;
+      font-size: 40px;
+    }
+  }
+
+  &:hover {
+    svg {
+      color: #8cc4a4;
+      border-color: #8cc4a4;
+      background-color: $primary_green;
+    }
+  }
+}
+
+.open {
+  width: calc($side_nav_size_open - (2 * $side_nav_padding_size));
+}

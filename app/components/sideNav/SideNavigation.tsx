@@ -5,6 +5,7 @@ import { Settings, UserCog } from "lucide-react";
 
 import styles from "@/style/components/sideNav/SideNavigation.module.scss";
 
+import Logo from "../ui/Logo";
 import SideNavigationButton from "./SideNavigationButton";
 import SideNavigationLock, { SIDE_NAVIGATION_LOCK_STATE } from "./SideNavigationLock";
 
@@ -37,8 +38,10 @@ export default function SideNavigation(): JSX.Element {
   }
 
   return (
-    <nav className={`${styles.main} ${open ? styles.open : styles.close}`}>
-      <ul onMouseEnter={openHandler} onMouseLeave={closeHandler}>
+    <nav className={`${styles.main} ${open ? styles.open : styles.close}`} onMouseLeave={closeHandler}>
+      <Logo open={open} onHover={openHandler} />
+
+      <ul onMouseEnter={openHandler}>
         <SideNavigationButton
           buttonIcon={<UserCog />}
           title="Administration"
