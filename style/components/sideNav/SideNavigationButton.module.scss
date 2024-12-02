@@ -1,3 +1,8 @@
+@import "../../variables";
+
+$button_size_closed: calc($side_nav_size_closed - (2 * $side_nav_padding_size));
+$button_size_open: calc($side_nav_size_open - (2 * $side_nav_padding_size));
+
 .main {
   button {
     appearance: none;
@@ -6,8 +11,8 @@
     display: flex;
     align-items: center;
 
-    width: 60px;
-    height: 60px;
+    width: $button_size_closed;
+    height: $button_size_closed;
 
     border-radius: 5px;
 
@@ -22,11 +27,11 @@
     }
 
     .icon {
-      margin: 0 10px;
+      margin: 0 15px;
 
       svg {
-        width: 40px;
-        height: 40px;
+        width: calc($button_size_closed / 2);
+        height: calc($button_size_closed / 2);
 
         color: #ffffff;
       }
@@ -34,39 +39,15 @@
 
     .title {
       p {
-        font-size: 25px;
+        font-size: 20px;
         color: #ffffff;
       }
     }
-
-    // svg {
-    //   width: 40px;
-    //   height: 40px;
-
-    //   color: #ffffff;
-    // }
-
-    // p {
-    //   width: 0;
-    //   transform: translateX(10px);
-
-    //   font-size: 25px;
-    //   line-height: 0;
-    //   color: #ffffff;
-
-    //   transition: all .5s;
-    // }
-
-    // .open {
-    //   width: auto;
-    //   margin: 0 20px;
-    //   transform: translateX(0);
-    // }
   }
 }
 
 .open {
   button {
-    width: 450px;
+    width: $button_size_open;
   }
 }

@@ -9,22 +9,26 @@
 
   height: 100vh;
 
-  padding: 50px 20px;
+  padding: 50px $side_nav_padding_size;
 
   background-color: $secondary_green;
 
   transition: all .5s;
 
   ul {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+
     height: fit-content;
     list-style: none;
   }
 }
 
 .open {
-  width: 500px;
+  width: $side_nav_size_open;
 }
 
 .close {
-  width: 100px;
+  width: $side_nav_size_closed;
 }
