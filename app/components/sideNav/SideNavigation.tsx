@@ -43,11 +43,13 @@ export default function SideNavigation(): JSX.Element {
           buttonIcon={<UserCog />}
           title="Administration"
           open={open}
+          link="/admin"
         />
         <SideNavigationButton
           buttonIcon={<Settings />}
           title="Settings"
           open={open}
+          link="/"
         />
       </ul>
 
