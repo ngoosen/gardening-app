@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { UserCog } from "lucide-react";
+import { Settings, UserCog } from "lucide-react";
 
 import styles from "@/style/components/sideNav/SideNavigation.module.scss";
 
@@ -42,6 +42,11 @@ export default function SideNavigation(): JSX.Element {
         <SideNavigationButton
           buttonIcon={<UserCog />}
           title="Administration"
+          open={open}
+        />
+        <SideNavigationButton
+          buttonIcon={<Settings />}
+          title="Paramètres"
           open={open}
         />
       </ul>
