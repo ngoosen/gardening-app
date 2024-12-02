@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+
 import "./globals.css";
+
+import SideNavigation from "./components/sideNav/SideNavigation";
 
 export const metadata: Metadata = {
   title: "Plant App",
@@ -14,7 +17,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        {children}
+        <SideNavigation />
+        <main>
+          {children}
+        </main>
       </body>
     </html>
   );

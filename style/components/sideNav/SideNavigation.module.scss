@@ -1,0 +1,19 @@
+@import "../../variables";
+
+.main {
+  float: left;
+
+  height: 100vh;
+
+  background-color: $secondary_green;
+
+  transition: all .5s;
+}
+
+.open {
+  width: 500px;
+}
+
+.close {
+  width: 100px;
+}
