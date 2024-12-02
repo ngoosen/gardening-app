@@ -1,0 +1,39 @@
+@import "../../variables";
+
+.main {
+  appearance: none;
+  border: none;
+
+  position: absolute;
+  right: -20px;
+  bottom: 10px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 40px;
+  height: 40px;
+
+  border-radius: 100%;
+  background-color: #ffffff;
+  box-shadow: 2px 2px 5px 0 #92a79b;
+  transition: all .2s;
+
+  svg {
+    width: 20px;
+    height: 20px;
+
+    color: $secondary_green;
+  }
+
+  &:hover {
+    cursor: pointer;
+    background-color: $secondary_green;
+    box-shadow: -2px 2px 5px 0 #92a79b;
+
+    svg {
+      color: #ffffff;
+    }
+  }
+}
