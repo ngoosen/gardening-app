@@ -1,9 +1,9 @@
 @import "../../variables";
 
 .main {
-  float: left;
-
-  position: relative;
+  position: sticky;
+  top: 0;
+  left: 0;
 
   display: flex;
 

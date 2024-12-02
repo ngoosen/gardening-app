@@ -17,10 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <SideNavigation />
-        <main>
-          {children}
-        </main>
+        <div className="page_main">
+          <SideNavigation />
+          <main>
+            {children}
+          </main>
+        </div>
       </body>
     </html>
   );
