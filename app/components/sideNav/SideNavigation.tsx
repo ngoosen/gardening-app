@@ -46,7 +46,7 @@ export default function SideNavigation(): JSX.Element {
         />
         <SideNavigationButton
           buttonIcon={<Settings />}
-          title="Paramètres"
+          title="Settings"
           open={open}
         />
       </ul>

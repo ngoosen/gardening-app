@@ -1,9 +1,7 @@
-// import styles from "@/app/page.module.scss";
-
-import PlantList from "./components/PlantList";
+import Dashboard from "./components/dashboard/Dashboard";
 
 export default async function Home() {
   return (
-    <PlantList />
+    <Dashboard />
   );
 }

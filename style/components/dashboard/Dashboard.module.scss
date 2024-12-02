@@ -1,0 +1,53 @@
+@import "../../variables";
+
+$title_height: 10vh;
+
+.main {
+  .title {
+    height: $title_height;
+
+    padding: 20px;
+
+    background-color: $primary_green;
+
+    h1, h2 {
+      color: $dark_green;
+    }
+
+    h2 {
+      font-size: 16px;
+    }
+  }
+
+  .articles {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: 3fr 1fr 2fr;
+    gap: 10px;
+
+    width: 100%;
+    height: calc(100vh - $title_height);
+
+    padding: 20px;
+
+    :nth-child(1),
+    :nth-child(2) {
+      grid-column-start: span 3;
+    }
+
+    :nth-child(3) {
+      grid-column-start: span 6;
+    }
+
+    :nth-child(4),
+    :nth-child(5),
+    :nth-child(6) {
+      grid-column-start: span 2;
+    }
+
+    .placeholder {
+      border-radius: 10px;
+      background-color: #ebebeb;
+    }
+  }
+}
