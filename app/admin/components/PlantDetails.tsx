@@ -1,13 +1,13 @@
 import { useState } from "react";
 import dayjs from "dayjs";
 
-import styles from "@/style/components/PlantDetails.module.scss";
+import styles from "@/style/admin/PlantDetails.module.scss";
 
 import { IPlant } from "@/hooks/usePlants";
 
-import Dialog from "./ui/Dialog";
-import Button from "./ui/Button";
 import NewPlantForm from "./NewPlantForm";
+import Button from "@/app/components/ui/Button";
+import Dialog from "@/app/components/ui/Dialog";
 
 interface IPlantDetailsProps {
   plant: IPlant

@@ -1,6 +1,6 @@
 import { useRef } from "react";
 
-import styles from "@/style/components/NewPlantForm.module.scss";
+import styles from "@/style/admin/NewPlantForm.module.scss";
 
 interface IPlantAddFormProps {
   onSubmit: CallableFunction

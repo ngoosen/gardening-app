@@ -3,14 +3,14 @@
 import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
-import styles from "@/style/components/PlantList.module.scss";
+import styles from "@/style/admin/PlantList.module.scss";
 
 import usePlants, { IPlant } from "@/hooks/usePlants";
 
 import PlantListItem from "./PlantListItem";
 import PlantDetails from "./PlantDetails";
 import PlantAddForm from "./NewPlantForm";
-import Button from "./ui/Button";
+import Button from "@/app/components/ui/Button";
 
 export default function PlantList(): JSX.Element {
   const [
