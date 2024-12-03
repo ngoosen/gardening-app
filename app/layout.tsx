@@ -3,6 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 import SideNavigation from "./components/sideNav/SideNavigation";
+import Footer from "./components/Footer";
 
 export const metadata: Metadata = {
   title: "Plant App",
@@ -20,6 +21,7 @@ export default function RootLayout({
         <div className="page_main">
           <SideNavigation />
           <main>
+            <Footer />
             {children}
           </main>
         </div>
