@@ -7,6 +7,7 @@ import styles from "@/style/admin/PlantList.module.scss";
 
 import usePlants, { IPlant } from "@/hooks/usePlants";
 
+import PlantListFilter from "./PlantListFilter";
 import PlantListItem from "./PlantListItem";
 import PlantDetails from "./PlantDetails";
 import PlantAddForm from "./NewPlantForm";
@@ -71,6 +72,8 @@ export default function PlantList(): JSX.Element {
   return (
     <>
       <div className={styles.container}>
+        <PlantListFilter />
+
         <ul className={styles.main}>
           {plants.content.map(plant => (
             <PlantListItem
