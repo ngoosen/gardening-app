@@ -33,6 +33,7 @@ $font_size: 12px;
   }
 
   &:first-of-type {
-    width: calc(70% + 10px);
+    width: calc(70% - 5px);
+    margin-left: 10px;
   }
 }

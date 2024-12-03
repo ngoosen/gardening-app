@@ -25,6 +25,7 @@ export default function PlantListItem(props: IPlantListItemProps): JSX.Element {
           {dayjs(plant.updatedAt).format("YYYY-MM-DD HH:mm")}
         </p>
       </div>
+      <div className={styles.actions}></div>
     </li>
   );
 }
