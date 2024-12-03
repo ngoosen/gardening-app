@@ -1,6 +1,8 @@
-$font_size: 16px;
+$font_size: 12px;
 
 .main {
+  position: relative;
+
   button {
     appearance: none;
     border: 0;
@@ -8,11 +10,12 @@ $font_size: 16px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    gap: 5px;
 
-    padding: 5px 20px;
+    padding: 5px 10px;
 
     border-radius: 5px;
+    background-color: transparent;
 
     p {
       font-size: $font_size;
@@ -22,5 +25,14 @@ $font_size: 16px;
       width: $font_size;
       height: $font_size;
     }
+
+    &:hover {
+      cursor: pointer;
+      background-color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  &:first-of-type {
+    width: calc(70% + 10px);
   }
 }

@@ -1,4 +1,7 @@
+import styles from "@/style/admin/PlantListItem.module.scss";
+
 import { IPlant } from "@/hooks/usePlants";
+import dayjs from "dayjs";
 
 interface IPlantListItemProps {
   plant: IPlant
@@ -13,8 +16,15 @@ export default function PlantListItem(props: IPlantListItemProps): JSX.Element {
   }
 
   return (
-    <li onClick={clickHandler}>
-      {plant.name}
+    <li className={styles.main} onClick={clickHandler}>
+      <div className={styles.data}>
+        <p className={styles.plant_name}>
+          {plant.name}
+        </p>
+        <p className={styles.last_update}>
+          {dayjs(plant.updatedAt).format("YYYY-MM-DD HH:mm")}
+        </p>
+      </div>
     </li>
   );
 }
