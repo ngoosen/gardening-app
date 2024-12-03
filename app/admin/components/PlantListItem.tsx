@@ -1,7 +1,9 @@
+import dayjs from "dayjs";
+import { Pencil, Trash2 } from "lucide-react";
+
 import styles from "@/style/admin/PlantListItem.module.scss";
 
 import { IPlant } from "@/hooks/usePlants";
-import dayjs from "dayjs";
 
 interface IPlantListItemProps {
   plant: IPlant
@@ -25,7 +27,14 @@ export default function PlantListItem(props: IPlantListItemProps): JSX.Element {
           {dayjs(plant.updatedAt).format("YYYY-MM-DD HH:mm")}
         </p>
       </div>
-      <div className={styles.actions}></div>
+      <div className={styles.actions}>
+        <button>
+          <Pencil />
+        </button>
+        <button>
+          <Trash2 />
+        </button>
+      </div>
     </li>
   );
 }
