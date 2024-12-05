@@ -17,9 +17,8 @@ export default function PlantList(): JSX.Element {
   const [
     plants,
     getPlants,
-    // plantDetails,
     ,
-    getPlant,
+    ,
     addPlant,
     // updatePlant,
     ,

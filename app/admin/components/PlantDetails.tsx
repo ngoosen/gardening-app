@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import dayjs from "dayjs";
 
 import styles from "@/style/admin/PlantDetails.module.scss";
@@ -14,7 +14,14 @@ interface IPlantDetailsProps {
 
 export default function PlantDetails(props: IPlantDetailsProps): JSX.Element {
   const { plant, open, } = props;
+  const [init, setInit] = useState<boolean>(true);
   const [showUpdateForm, setShowUpdateForm] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (open) {
+      setInit(false);
+    }
+  }, [open]);
 
   function toggleUpdateForm() {
     setShowUpdateForm(latest =>!latest);
@@ -27,7 +34,7 @@ export default function PlantDetails(props: IPlantDetailsProps): JSX.Element {
   }
 
   return (
-    <div className={`${styles.main} ${open ? styles.open : styles.closed}`}>
+    <div className={`${styles.main} ${open ? styles.open : (!init && styles.closed)}`}>
       <h2>{plant.name}</h2>
       <p>{plant.description}</p>
 
