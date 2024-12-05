@@ -27,6 +27,7 @@ export default function PlantList(): JSX.Element {
     clearPlantDetails,
   ] = usePlants();
 
+  const [displayedPlantDetails, setDisplayedPlantDetails] = useState<number | undefined>();
   const [showAddPlantForm, setShowAddPlantForm] = useState<boolean>(false);
   const [toggleDialog, setToggleDialog] = useState<boolean>(false);
 
@@ -38,7 +39,13 @@ export default function PlantList(): JSX.Element {
   }, []);
 
   function clickHandler(id: number) {
-    getPlant(id);
+    setDisplayedPlantDetails(latest => {
+      if (latest === id) {
+        return undefined;
+      } else {
+        return id;
+      }
+    });
   }
 
   function toggleDeletePlantDialog(id: number) {
@@ -91,6 +98,7 @@ export default function PlantList(): JSX.Element {
             <PlantListItem
             key={plant.id}
             plant={plant}
+            displayDetails={displayedPlantDetails === plant.id}
             onClick={clickHandler}
             onDelete={toggleDeletePlantDialog}
             />

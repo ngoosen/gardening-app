@@ -1,56 +1,57 @@
 @import "../variables";
 
 .main {
-  width: 50vw;
+  width: calc(100% - 50px);
+  height: 0;
 
-  padding: 50px;
+  margin: 0 auto;
+  padding: 0;
 
-  border-radius: 20px;
+  border: solid $primary_green;
+  border-width: 3px 0 0 0;
+  border-radius: 0 0 10px 10px;
   background-color: #ffffff;
 
+  overflow: hidden;
+
   > p {
-    margin: 40px 0;
+    height: 105px;
+    margin: 20px 0;
+    overflow: auto;
   }
 
   .dates {
     color: #5e5e5e;
-    font-size: 12px;
-
-    margin-bottom: 20px;
-  }
-
-  .actions {
-    display: flex;
-    gap: 20px;
-
-    margin: 20px 0;
-
-    > button {
-      background-color: $primary_green;
-
-      &:hover {
-        color: #ffffff;
-      }
-
-      &:first-of-type:hover {
-        background-color: #48b0ec;
-      }
-
-      &:last-of-type:hover {
-        background-color: #ff5722;
-      }
-    }
+    font-size: 10px;
   }
 }
 
-.dialog_buttons {
-  display: flex;
-  gap: 30px;
+.open {
+  animation: open_anim .2s linear forwards;
+}
 
-  margin-top: 30px;
+.closed {
+  animation: close_anim .2s linear forwards;
+}
 
-  .confirm:hover {
-    color: #ffffff;
-    background-color: #ff4322;
+@keyframes open_anim {
+  0% {
+    height: 0;
+    padding: 0 30px;
+  }
+  100% {
+    height: 250px;
+    padding: 20px 30px;
+  }
+}
+
+@keyframes close_anim {
+  0% {
+    height: 250px;
+    padding: 20px 30px;
+  }
+  100% {
+    height: 0;
+    padding: 0 30px;
   }
 }
