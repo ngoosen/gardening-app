@@ -23,7 +23,16 @@ export default function SideNavigationLock(props: ISideNavigationLockProps): JSX
   const [displayState, setDisplayState] = useState<SIDE_NAVIGATION_LOCK_STATE>(state);
 
   useEffect(() => {
+    const lockPreference = window.localStorage.getItem("side_nav_lock_preference");
+
+    if (lockPreference) {
+      setDisplayState(lockPreference as SIDE_NAVIGATION_LOCK_STATE);
+    }
+  }, []);
+
+  useEffect(() => {
     onLock(displayState);
+    window.localStorage.setItem("side_nav_lock_preference", displayState);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [displayState]);
 
