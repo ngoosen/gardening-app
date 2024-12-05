@@ -113,8 +113,8 @@ export default function PlantList(): JSX.Element {
 
       if (sortBy === "update") {
         sorted.sort((plant1: IPlant, plant2: IPlant) => {
-          if (dayjs(plant1.updatedAt).isBefore(dayjs(plant2.updatedAt))) return 1;
-          if (dayjs(plant1.updatedAt).isAfter(dayjs(plant2.updatedAt))) return -1;
+          if (dayjs(plant1.updatedAt).isAfter(dayjs(plant2.updatedAt))) return 1;
+          if (dayjs(plant1.updatedAt).isBefore(dayjs(plant2.updatedAt))) return -1;
           return 0;
         });
       }
