@@ -8,18 +8,23 @@ import { IPlant } from "@/hooks/usePlants";
 interface IPlantListItemProps {
   plant: IPlant
   onClick: CallableFunction
+  onDelete: CallableFunction
 }
 
 export default function PlantListItem(props: IPlantListItemProps): JSX.Element {
-  const { plant, onClick, } = props;
+  const { plant, onClick, onDelete, } = props;
 
   function clickHandler() {
     onClick(plant.id);
   }
 
+  function deleteHandler() {
+    onDelete(plant.id);
+  }
+
   return (
-    <li className={styles.main} onClick={clickHandler}>
-      <div className={styles.data}>
+    <li className={styles.main}>
+      <div className={styles.data} onClick={clickHandler}>
         <p className={styles.plant_name}>
           {plant.name}
         </p>
@@ -31,7 +36,7 @@ export default function PlantListItem(props: IPlantListItemProps): JSX.Element {
         <button>
           <Pencil />
         </button>
-        <button>
+        <button onClick={deleteHandler}>
           <Trash2 />
         </button>
       </div>

@@ -1,31 +1,36 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 
 import styles from "@/style/admin/PlantList.module.scss";
 
-import usePlants, { IPlant } from "@/hooks/usePlants";
+import usePlants from "@/hooks/usePlants";
 
 import PlantListFilter from "./PlantListFilter";
 import PlantListItem from "./PlantListItem";
-import PlantDetails from "./PlantDetails";
 import PlantAddForm from "./NewPlantForm";
 import Button from "@/app/components/ui/Button";
+import Dialog from "@/app/components/ui/Dialog";
 
 export default function PlantList(): JSX.Element {
   const [
     plants,
     getPlants,
-    plantDetails,
+    // plantDetails,
+    ,
     getPlant,
     addPlant,
-    updatePlant,
+    // updatePlant,
+    ,
     deletePlant,
     clearPlantDetails,
   ] = usePlants();
 
   const [showAddPlantForm, setShowAddPlantForm] = useState<boolean>(false);
+  const [toggleDialog, setToggleDialog] = useState<boolean>(false);
+
+  const selectedPlantId = useRef<number | null>(null);
 
   useEffect(() => {
     getPlants();
@@ -36,8 +41,15 @@ export default function PlantList(): JSX.Element {
     getPlant(id);
   }
 
-  function deletePlantHandler(id: number) {
-    deletePlant(id);
+  function toggleDeletePlantDialog(id: number) {
+    setToggleDialog(latest => !latest);
+    selectedPlantId.current = id;
+  }
+
+  function deletePlantHandler() {
+    deletePlant(selectedPlantId.current);
+    selectedPlantId.current = null;
+    setToggleDialog(false);
     clearPlantDetails();
   }
 
@@ -56,14 +68,14 @@ export default function PlantList(): JSX.Element {
     });
   }
 
-  function updatePlantHandler(plant: IPlant, name: string, description: string) {
-    updatePlant({
-      ...plant,
-      name,
-      description,
-    });
-    clearPlantDetails();
-  }
+  // function updatePlantHandler(plant: IPlant, name: string, description: string) {
+  //   updatePlant({
+  //     ...plant,
+  //     name,
+  //     description,
+  //   });
+  //   clearPlantDetails();
+  // }
 
   if (!plants?.content) {
     return <></>;
@@ -80,16 +92,23 @@ export default function PlantList(): JSX.Element {
             key={plant.id}
             plant={plant}
             onClick={clickHandler}
+            onDelete={toggleDeletePlantDialog}
             />
           ))}
         </ul>
 
-        {plantDetails && (
-          <PlantDetails
-            plant={plantDetails}
-            onUpdate={updatePlantHandler}
-            onDelete={deletePlantHandler}
-          />
+        {toggleDialog && (
+          <Dialog onClose={() => setToggleDialog(false)}>
+            <p>Are you sure you want to delete this plant?</p>
+            <div>
+              <Button onClick={deletePlantHandler}>
+                Yes
+              </Button>
+              <Button onClick={() => setToggleDialog(false)}>
+                No
+              </Button>
+            </div>
+          </Dialog>
         )}
       </div>
 
