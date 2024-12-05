@@ -9,7 +9,7 @@ $label_width: 90px;
   margin: 0 auto;
   padding: 0;
 
-  border-color: $primary_green;
+  border-color: $secondary_green;
   border-radius: 0 0 10px 10px;
   background-color: #ffffff;
 
@@ -57,8 +57,8 @@ $label_width: 90px;
         resize: none;
 
         &:focus {
-          border-color: $secondary_green;
-          outline: 2px solid $secondary_green;
+          border-color: $primary_green;
+          outline: 2px solid $primary_green;
         }
       }
     }
@@ -93,7 +93,7 @@ $label_width: 90px;
       font-weight: bold;
       color: $dark_green;
 
-      background-color: $primary_green;
+      background-color: $secondary_green;
 
       border-radius: 20px;
       border: 1px solid $dark_green;
