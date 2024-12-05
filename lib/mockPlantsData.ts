@@ -6,7 +6,7 @@ export const mockPlantsData = {
       name: "Monstera deliciosa",
       description: "Exotic palm plant",
       createdAt: "2023-10-01 15:45:15",
-      updatedAt: "2023-10-14 09:32:57"
+      updatedAt: "2023-10-15 09:32:57"
     },
     {
       id: 2,
@@ -22,7 +22,7 @@ export const mockPlantsData = {
       name: "Calathea rufibarba",
       description: "Fluffy leaves plant",
       createdAt: "2023-10-01 15:45:15",
-      updatedAt: "2023-10-14 09:32:57"
+      updatedAt: "2023-10-13 09:32:57"
     },
     {
       id: 4,
@@ -30,7 +30,7 @@ export const mockPlantsData = {
       name: "Calathea zebrina",
       description: "Fat leaves plant",
       createdAt: "2023-10-01 15:45:15",
-      updatedAt: "2023-10-14 09:32:57"
+      updatedAt: "2023-10-20 09:32:57"
     }
   ],
   page: {

@@ -1,21 +1,54 @@
+import { useEffect, useState } from "react";
+
 import styles from "@/style/admin/PlantListFilter.module.scss";
+
+import { ORDER } from "@/hooks/usePlants";
+
 import PlantListFilterItem from "./PlantListFilterItem";
 
-export enum ORDER {
-  ASC = "asc",
-  DESC = "desc"
+interface IPlantListFilterProps {
+  onSort: CallableFunction
 }
 
-export default function PlantListFilter(): JSX.Element {
+interface ISorting {
+  sortBy: string,
+  order: ORDER
+}
+
+export default function PlantListFilter(props: IPlantListFilterProps): JSX.Element {
+  const { onSort, } = props;
+  const [sorting, setSorting] = useState<ISorting>({ sortBy: "name", order: ORDER.DESC})
+
+  useEffect(() => {
+    onSort(sorting.sortBy, sorting.order);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [sorting]);
+
+  function nameClickHandler(newOrder: ORDER) {
+    setSorting({
+      sortBy: "name",
+      order: newOrder,
+    });
+  }
+
+  function dateClickHandler(newOrder: ORDER) {
+    setSorting({
+      sortBy: "update",
+      order: newOrder,
+    });
+  }
+
   return (
     <ul className={styles.main}>
       <PlantListFilterItem
-        order={ORDER.DESC}
+        order={sorting.sortBy === "name" && sorting.order === ORDER.ASC ? ORDER.ASC : ORDER.DESC}
         title="Name"
-        />
+        onClick={nameClickHandler}
+      />
       <PlantListFilterItem
-        order={ORDER.DESC}
+        order={sorting.sortBy === "update" && sorting.order === ORDER.ASC ? ORDER.ASC : ORDER.DESC}
         title="Last update"
+        onClick={dateClickHandler}
       />
     </ul>
   );

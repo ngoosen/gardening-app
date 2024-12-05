@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 
 import styles from "@/style/admin/PlantList.module.scss";
 
-import usePlants, { IPlant } from "@/hooks/usePlants";
+import usePlants, { IPlant, ORDER } from "@/hooks/usePlants";
 
 import PlantListFilter from "./PlantListFilter";
 import PlantListItem from "./PlantListItem";
@@ -24,6 +24,8 @@ export default function PlantList(): JSX.Element {
     deletePlant,
   ] = usePlants();
 
+  const [displayedPlants, setDisplayedPlants] = useState<IPlant[]>([]);
+
   const [displayedPlantDetails, setDisplayedPlantDetails] = useState<number | undefined>();
   const [displayedPlantUpdateForm, setDisplayedPlantUpdateForm] = useState<number | undefined>();
 
@@ -36,6 +38,12 @@ export default function PlantList(): JSX.Element {
     getPlants();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (plants?.content) {
+      setDisplayedPlants(plants.content);
+    }
+  }, [plants]);
 
   function clickHandler(id: number) {
     setDisplayedPlantDetails(latest => {
@@ -91,17 +99,45 @@ export default function PlantList(): JSX.Element {
     setDisplayedPlantUpdateForm(undefined);
   }
 
-  if (!plants?.content) {
+  function sortPlants(sortBy: string, order: ORDER) {
+    setDisplayedPlants(latest => {
+      const sorted = [...latest];
+
+      if (sortBy === "name") {
+        sorted.sort((plant1: IPlant, plant2: IPlant) => {
+          if (plant1.name > plant2.name) return 1;
+          if (plant1.name < plant2.name) return -1;
+          return 0;
+        });
+      }
+
+      if (sortBy === "update") {
+        sorted.sort((plant1: IPlant, plant2: IPlant) => {
+          if (dayjs(plant1.updatedAt).isBefore(dayjs(plant2.updatedAt))) return 1;
+          if (dayjs(plant1.updatedAt).isAfter(dayjs(plant2.updatedAt))) return -1;
+          return 0;
+        });
+      }
+
+      if (order === ORDER.ASC) {
+        sorted.reverse();
+      }
+
+      return sorted;
+    });
+  }
+
+  if (!displayedPlants) {
     return <></>;
   }
 
   return (
     <>
       <div className={styles.container}>
-        <PlantListFilter />
+        <PlantListFilter onSort={sortPlants} />
 
         <ul className={styles.main}>
-          {plants.content.map(plant => (
+          {displayedPlants.map(plant => (
               <PlantListItem
               key={plant.id}
               plant={plant}
