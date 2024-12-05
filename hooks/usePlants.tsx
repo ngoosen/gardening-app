@@ -21,7 +21,10 @@ export interface IPlant {
   updatedAt: string
 }
 
-const enableMockData = process.env.NODE_ENV !== "production" && true;
+export enum ORDER {
+  ASC = "asc",
+  DESC = "desc"
+}
 
 export default function usePlants(): [
   IPlantsMetadata | undefined,
@@ -40,14 +43,12 @@ export default function usePlants(): [
     console.info("Fetching plants...");
 
     try {
-      let data;
+      //* With API running
+      // const response = await fetch("http://localhost:8080/api/v1/plants");
+      // const data = await response.json();
 
-      if (enableMockData) {
-        data = mockPlantsData;
-      } else {
-        const response = await fetch("http://localhost:8080/api/v1/plants");
-        data = await response.json();
-      }
+      //* Without API running
+      const data = mockPlantsData;
 
       setPlantsMetadata(data);
     } catch (error) {
@@ -57,15 +58,13 @@ export default function usePlants(): [
 
   async function getPlant(id: number) {
     try {
-      let data;
+      //* With API running
+      // const response = await fetch(`http://localhost:8080/api/v1/plants/${id}`);
+      // const data = await response.json();
 
-      if (enableMockData) {
-        data = mockPlantsData.content[id - 1];
-        setPlantDetails(undefined);
-      } else {
-        const response = await fetch(`http://localhost:8080/api/v1/plants/${id}`);
-        data = await response.json();
-      }
+      //* Without API running
+      const data = mockPlantsData.content[id - 1];
+      setPlantDetails(undefined);
 
       setPlantDetails(data);
     } catch (error) {
@@ -75,33 +74,33 @@ export default function usePlants(): [
 
   async function addPlant(newPlant: IPlant) {
     try {
-      if (enableMockData) {
-        newPlant = {
-          ...newPlant,
-          id: mockPlantsData.content.length + 1
-        };
+      //* With API running
+      // await fetch("http://localhost:8080/api/v1/plants", {
+      //     method: "POST",
+      //     headers: {
+      //         "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(newPlant),
+      // });
 
-        const newContent = {
-          ...mockPlantsData,
-          content: [
-            ...mockPlantsData.content,
-            newPlant,
-          ]
-        };
+      // getPlants();
 
-        mockPlantsData.content.push(newPlant);
-        setPlantsMetadata(newContent);
-      } else {
-        await fetch("http://localhost:8080/api/v1/plants", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newPlant),
-        });
+      //* Without API running
+      newPlant = {
+        ...newPlant,
+        id: mockPlantsData.content.length + 1
+      };
 
-        getPlants();
-      }
+      const newContent = {
+        ...mockPlantsData,
+        content: [
+          ...mockPlantsData.content,
+          newPlant,
+        ]
+      };
+
+      mockPlantsData.content.push(newPlant);
+      setPlantsMetadata(newContent);
     } catch (error) {
       console.log(error);
     }
@@ -109,7 +108,19 @@ export default function usePlants(): [
 
   async function updatePlant(newPlant: IPlant) {
     try {
-      if (enableMockData && plantsMetadata) {
+      //* With API running
+      // await fetch(`http://localhost:8080/api/v1/plants/${newPlant.id}`, {
+      //   method: "PUT",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify(newPlant),
+      // });
+
+      // getPlants();
+
+      //* Without API running
+      if (plantsMetadata) {
         const newContent = {
           ...plantsMetadata,
         };
@@ -119,16 +130,6 @@ export default function usePlants(): [
         };
 
         setPlantsMetadata(newContent);
-      } else {
-        await fetch(`http://localhost:8080/api/v1/plants/${newPlant.id}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(newPlant),
-        });
-
-        getPlants();
       }
     } catch (error) {
       console.log(error);
@@ -137,7 +138,14 @@ export default function usePlants(): [
 
   async function deletePlant(id: number) {
     try {
-      if (enableMockData && plantsMetadata) {
+      //* With API running
+      // await fetch(`http://localhost:8080/api/v1/plants/${id}`, {
+      //   method: "DELETE",
+      // });
+      // getPlants();
+
+      //* Without API running
+      if (plantsMetadata) {
         const newContent = plantsMetadata;
 
         const start = newContent.content.slice(0, id - 1);
@@ -151,11 +159,6 @@ export default function usePlants(): [
         setPlantsMetadata({
           ...newContent
         });
-      } else {
-        await fetch(`http://localhost:8080/api/v1/plants/${id}`, {
-          method: "DELETE",
-        });
-        getPlants();
       }
     } catch (error) {
       console.log(error);
