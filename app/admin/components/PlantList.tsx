@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 
 import styles from "@/style/admin/PlantList.module.scss";
 
-import usePlants from "@/hooks/usePlants";
+import usePlants, { IPlant } from "@/hooks/usePlants";
 
 import PlantListFilter from "./PlantListFilter";
 import PlantListItem from "./PlantListItem";
@@ -20,15 +20,15 @@ export default function PlantList(): JSX.Element {
     ,
     ,
     addPlant,
-    // updatePlant,
-    ,
+    updatePlant,
     deletePlant,
-    clearPlantDetails,
   ] = usePlants();
 
   const [displayedPlantDetails, setDisplayedPlantDetails] = useState<number | undefined>();
+  const [displayedPlantUpdateForm, setDisplayedPlantUpdateForm] = useState<number | undefined>();
+
+  const [toggleDeleteDialog, setToggleDeleteDialog] = useState<boolean>(false);
   const [showAddPlantForm, setShowAddPlantForm] = useState<boolean>(false);
-  const [toggleDialog, setToggleDialog] = useState<boolean>(false);
 
   const selectedPlantId = useRef<number | null>(null);
 
@@ -48,15 +48,14 @@ export default function PlantList(): JSX.Element {
   }
 
   function toggleDeletePlantDialog(id: number) {
-    setToggleDialog(latest => !latest);
+    setToggleDeleteDialog(latest => !latest);
     selectedPlantId.current = id;
   }
 
   function deletePlantHandler() {
     deletePlant(selectedPlantId.current);
     selectedPlantId.current = null;
-    setToggleDialog(false);
-    clearPlantDetails();
+    setToggleDeleteDialog(false);
   }
 
   function toggleAddPlantForm() {
@@ -74,14 +73,22 @@ export default function PlantList(): JSX.Element {
     });
   }
 
-  // function updatePlantHandler(plant: IPlant, name: string, description: string) {
-  //   updatePlant({
-  //     ...plant,
-  //     name,
-  //     description,
-  //   });
-  //   clearPlantDetails();
-  // }
+  function toggleUpdateHandler(id: number) {
+    setDisplayedPlantDetails(id);
+
+    setDisplayedPlantUpdateForm(latest => {
+      if (latest === id) {
+        return undefined;
+      } else {
+        return id;
+      }
+    });
+  }
+
+  function updatePlantHandler(updatedPlant: IPlant) {
+    updatePlant(updatedPlant);
+    setDisplayedPlantUpdateForm(undefined);
+  }
 
   if (!plants?.content) {
     return <></>;
@@ -94,24 +101,27 @@ export default function PlantList(): JSX.Element {
 
         <ul className={styles.main}>
           {plants.content.map(plant => (
-            <PlantListItem
-            key={plant.id}
-            plant={plant}
-            displayDetails={displayedPlantDetails === plant.id}
-            onClick={clickHandler}
-            onDelete={toggleDeletePlantDialog}
+              <PlantListItem
+              key={plant.id}
+              plant={plant}
+              displayDetails={displayedPlantDetails === plant.id}
+              displayUpdateForm={displayedPlantUpdateForm === plant.id}
+              onClick={clickHandler}
+              onDelete={toggleDeletePlantDialog}
+              onToggleUpdate={toggleUpdateHandler}
+              onUpdate={updatePlantHandler}
             />
           ))}
         </ul>
 
-        {toggleDialog && (
-          <Dialog onClose={() => setToggleDialog(false)}>
+        {toggleDeleteDialog && (
+          <Dialog onClose={() => setToggleDeleteDialog(false)}>
             <p>Are you sure you want to delete this plant?</p>
             <div>
               <Button onClick={deletePlantHandler}>
                 Yes
               </Button>
-              <Button onClick={() => setToggleDialog(false)}>
+              <Button onClick={() => setToggleDeleteDialog(false)}>
                 No
               </Button>
             </div>

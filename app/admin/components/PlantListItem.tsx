@@ -1,4 +1,3 @@
-import { useState } from "react";
 import dayjs from "dayjs";
 import { Pencil, Trash2 } from "lucide-react";
 
@@ -11,13 +10,23 @@ import PlantDetails from "./PlantDetails";
 interface IPlantListItemProps {
   plant: IPlant
   displayDetails: boolean
+  displayUpdateForm: boolean
   onClick: CallableFunction
   onDelete: CallableFunction
+  onToggleUpdate: CallableFunction
+  onUpdate: CallableFunction
 }
 
 export default function PlantListItem(props: IPlantListItemProps): JSX.Element {
-  const { plant, displayDetails, onClick, onDelete, } = props;
-  const [displayUpdateForm, setDisplayUpdateForm] = useState<boolean>(false);
+  const {
+    plant,
+    displayDetails,
+    displayUpdateForm,
+    onClick,
+    onDelete,
+    onToggleUpdate,
+    onUpdate,
+  } = props;
 
   function clickHandler() {
     onClick(plant.id);
@@ -28,11 +37,11 @@ export default function PlantListItem(props: IPlantListItemProps): JSX.Element {
   }
 
   function toggleUpdateForm() {
-    setDisplayUpdateForm(latest => !latest);
+    onToggleUpdate(plant.id);
   }
 
-  function updateHandler(plant: IPlant, name: string, description: string) {
-    //
+  function updateHandler(updatedPlant: IPlant) {
+    onUpdate(updatedPlant);
   }
 
   return (

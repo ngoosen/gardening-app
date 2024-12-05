@@ -1,11 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import dayjs from "dayjs";
 
 import styles from "@/style/admin/PlantDetails.module.scss";
 
 import { IPlant } from "@/hooks/usePlants";
-
-import NewPlantForm from "./NewPlantForm";
 
 interface IPlantDetailsProps {
   plant: IPlant
@@ -22,7 +20,9 @@ export default function PlantDetails(props: IPlantDetailsProps): JSX.Element {
     onUpdate,
   } = props;
   const [init, setInit] = useState<boolean>(true);
-  const [showUpdateForm, setShowUpdateForm] = useState<boolean>(false);
+
+  const nameRef = useRef<HTMLInputElement>(null);
+  const descriptionRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     if (open) {
@@ -30,12 +30,23 @@ export default function PlantDetails(props: IPlantDetailsProps): JSX.Element {
     }
   }, [open]);
 
-  function toggleUpdateForm() {
-    setShowUpdateForm(latest =>!latest);
-  }
+  useEffect(() => {
+    if (displayUpdateForm && nameRef.current) {
+      nameRef.current.focus();
+    }
+  }, [displayUpdateForm]);
 
-  function updateHandler(name: string, description: string) {
-    onUpdate(plant, name, description);
+  function submitHandler(e: React.MouseEvent<HTMLButtonElement>) {
+    e.preventDefault();
+
+    const name = nameRef.current?.value.trim();
+    const description = descriptionRef.current?.value.trim();
+
+    onUpdate({
+      ...plant,
+      name,
+      description
+    });
   }
 
   if (displayUpdateForm) {
@@ -44,30 +55,20 @@ export default function PlantDetails(props: IPlantDetailsProps): JSX.Element {
         <form>
           <div className={styles.name}>
             <label htmlFor="name">Name: </label>
-            <input type="text" name="name" id="name" placeholder={plant.name} />
+            <input ref={nameRef} type="text" name="name" id="name" placeholder={plant.name} />
           </div>
           <div className={styles.description}>
             <label htmlFor="description">Description:</label>
-            <textarea name="description" id="description" rows={4}>
-              {plant.description}
-            </textarea>
+            <textarea ref={descriptionRef} name="description" id="description" rows={4} defaultValue={plant.description} />
           </div>
 
-          <button type="button">Submit</button>
+          <button type="button" onClick={submitHandler}>Submit</button>
         </form>
 
         <div className={styles.dates}>
           <p>Created: {dayjs(plant.createdAt).format("DD-MM-YYYY HH:mm:ss")}</p>
           <p>Last updated: {dayjs(plant.updatedAt).format("DD-MM-YYYY HH:mm:ss")}</p>
         </div>
-
-        {showUpdateForm && (
-          <NewPlantForm
-            onSubmit={updateHandler}
-            defaultName={plant.name}
-            defaultDescription={plant.description}
-          />
-        )}
       </div>
     );
   }
@@ -81,14 +82,6 @@ export default function PlantDetails(props: IPlantDetailsProps): JSX.Element {
         <p>Created: {dayjs(plant.createdAt).format("DD-MM-YYYY HH:mm:ss")}</p>
         <p>Last updated: {dayjs(plant.updatedAt).format("DD-MM-YYYY HH:mm:ss")}</p>
       </div>
-
-      {showUpdateForm && (
-        <NewPlantForm
-          onSubmit={updateHandler}
-          defaultName={plant.name}
-          defaultDescription={plant.description}
-        />
-      )}
     </div>
   );
 }
