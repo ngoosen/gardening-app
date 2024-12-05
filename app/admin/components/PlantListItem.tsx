@@ -17,6 +17,7 @@ interface IPlantListItemProps {
 
 export default function PlantListItem(props: IPlantListItemProps): JSX.Element {
   const { plant, displayDetails, onClick, onDelete, } = props;
+  const [displayUpdateForm, setDisplayUpdateForm] = useState<boolean>(false);
 
   function clickHandler() {
     onClick(plant.id);
@@ -26,7 +27,11 @@ export default function PlantListItem(props: IPlantListItemProps): JSX.Element {
     onDelete(plant.id);
   }
 
-  function updateHandler() {
+  function toggleUpdateForm() {
+    setDisplayUpdateForm(latest => !latest);
+  }
+
+  function updateHandler(plant: IPlant, name: string, description: string) {
     //
   }
 
@@ -42,7 +47,7 @@ export default function PlantListItem(props: IPlantListItemProps): JSX.Element {
           </p>
         </div>
         <div className={styles.actions}>
-          <button onClick={updateHandler}>
+          <button className={displayUpdateForm ? styles.updating : ""} onClick={toggleUpdateForm}>
             <Pencil />
           </button>
           <button onClick={deleteHandler}>
@@ -54,6 +59,8 @@ export default function PlantListItem(props: IPlantListItemProps): JSX.Element {
       <PlantDetails
         plant={plant}
         open={displayDetails}
+        displayUpdateForm={displayUpdateForm}
+        onUpdate={updateHandler}
       />
     </li>
   );

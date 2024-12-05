@@ -1,5 +1,7 @@
 @import "../variables";
 
+$label_width: 90px;
+
 .main {
   width: calc(100% - 50px);
   height: 0;
@@ -22,6 +24,87 @@
   .dates {
     color: #5e5e5e;
     font-size: 10px;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+
+    height: 177px;
+
+    div {
+      display: flex;
+      gap: 10px;
+
+      width: 100%;
+
+      label {
+        font-size: 14px;
+        width: $label_width;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      input,
+      textarea {
+        border: 1px solid $dark_green;
+        border-radius: 5px;
+
+        resize: none;
+
+        &:focus {
+          border-color: $secondary_green;
+          outline: 2px solid $secondary_green;
+        }
+      }
+    }
+
+    .name {
+      input {
+        font-size: 1.5em;
+        font-weight: bold;
+
+        width: calc(100% - $label_width);
+
+        padding: 5px 10px;
+      }
+    }
+
+    .description {
+      textarea {
+        width: calc(100% - $label_width);
+        padding: 5px ;
+      }
+    }
+
+    button {
+      align-self: flex-end;
+
+      appearance: none;
+      border: none;
+
+      padding: 5px 20px;
+
+      font-size: 15px;
+      font-weight: bold;
+      color: $dark_green;
+
+      background-color: $primary_green;
+
+      border-radius: 20px;
+      border: 1px solid $dark_green;
+
+      &:hover {
+        cursor: pointer;
+        color: #ffffff;
+        border: 1px solid #ffffff;
+        background-color: $dark_green;
+      }
+    }
   }
 }
 
