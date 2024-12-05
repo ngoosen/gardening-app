@@ -13,6 +13,11 @@ import PlantAddForm from "./NewPlantForm";
 import Button from "@/app/components/ui/Button";
 import Dialog from "@/app/components/ui/Dialog";
 
+interface ISorting {
+  sortBy: string,
+  order: ORDER
+}
+
 export default function PlantList(): JSX.Element {
   const [
     plants,
@@ -24,6 +29,7 @@ export default function PlantList(): JSX.Element {
     deletePlant,
   ] = usePlants();
 
+  const [init, setInit] = useState<boolean>(true);
   const [displayedPlants, setDisplayedPlants] = useState<IPlant[]>([]);
 
   const [displayedPlantDetails, setDisplayedPlantDetails] = useState<number | undefined>();
@@ -36,12 +42,19 @@ export default function PlantList(): JSX.Element {
 
   useEffect(() => {
     getPlants();
+    setInit(false);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
     if (plants?.content) {
       setDisplayedPlants(plants.content);
+    }
+
+    const value = window.localStorage.getItem("plant_list_sorting");
+
+    if (value) {
+      sortPlants(value.split("-")[0], value.split("-")[1] as ORDER);
     }
   }, [plants]);
 
@@ -100,6 +113,10 @@ export default function PlantList(): JSX.Element {
   }
 
   function sortPlants(sortBy: string, order: ORDER) {
+    if (!init) {
+      window.localStorage.setItem("plant_list_sorting", `${sortBy}-${order}`);
+    }
+
     setDisplayedPlants(latest => {
       const sorted = [...latest];
 

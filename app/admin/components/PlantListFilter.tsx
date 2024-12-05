@@ -17,7 +17,15 @@ interface ISorting {
 
 export default function PlantListFilter(props: IPlantListFilterProps): JSX.Element {
   const { onSort, } = props;
-  const [sorting, setSorting] = useState<ISorting>({ sortBy: "name", order: ORDER.DESC})
+  const [sorting, setSorting] = useState<ISorting>({ sortBy: "name", order: ORDER.DESC});
+
+  useEffect(() => {
+    const value = window.localStorage.getItem("plant_list_sorting");
+
+    if (value) {
+      setSorting({ sortBy: value.split("-")[0], order: value.split("-")[1] as ORDER});
+    }
+  }, []);
 
   useEffect(() => {
     onSort(sorting.sortBy, sorting.order);
