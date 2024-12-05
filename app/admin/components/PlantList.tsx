@@ -40,6 +40,7 @@ export default function PlantList(): JSX.Element {
   function clickHandler(id: number) {
     setDisplayedPlantDetails(latest => {
       if (latest === id) {
+        setDisplayedPlantUpdateForm(undefined);
         return undefined;
       } else {
         return id;
